@@ -24,6 +24,7 @@ function quickSort(array) {
 	// Partition the array around the pivot element
 	// Разбиение массива вокруг элемента-указателя
 	for (let i = 1; i < array.length; i++) {
+		iterations++
 		if (array[i] < pivot) {
 			// If the element is less than the pivot, add it to the left partition
 			// Если элемент меньше указателя, добавьте его в левую часть
@@ -33,7 +34,6 @@ function quickSort(array) {
 			// В противном случае, добавьте его в правую часть
 			right.push(array[i])
 		}
-		iterations++
 	}
 	// Recursively sort the left and right partitions
 	// Рекурсивно сортируем левой и правой частей
@@ -41,5 +41,45 @@ function quickSort(array) {
 }
 
 console.log(quickSort(arr), iterations) // [ 0, 1, 1, 3, 5, 5, 6, 8, 8, 8, 10, 12, 15, 17, 33, 34, 51, 55, 67, 86, 89, 213, 535, 757 ], iterations: 117
+
+// complexity: O(n log n)
+
+const arr2 = [
+	1, 5, 5, 5, 4, 4, 3, 3, 67, 86, 8, 34, 3, 5, 8, 0, 1, 6, 8, 33, 51, 89, 55,
+	213, 535, 757, 10, 12, 15, 17,
+]
+let iterations2 = 0
+
+function quickSortWithoutDuplicates(array) {
+	if (array.length <= 1) return array
+	const pivot = array[0]
+	const left = []
+	const right = []
+
+	for (let i = 1; i < array.length; i++) {
+		iterations2++
+		if (array[i] < pivot) {
+			// If the element is less than the pivot, add it to the left partition
+			// Если элемент меньше указателя, добавьте его в левую часть
+			left.push(array[i])
+		}
+		if (array[i] > pivot) {
+			// Otherwise, add it to the right partition
+			// В противном случае, добавьте его в правую часть
+			right.push(array[i])
+		}
+		// If the element is equal to the pivot, ignore it
+		// Если элемент равен указателю, игнорируйте его
+	}
+	// Recursively sort the left and right partitions
+	// Рекурсивно сортируем левой и правой частей
+	return [
+		...quickSortWithoutDuplicates(left),
+		pivot,
+		...quickSortWithoutDuplicates(right),
+	]
+}
+
+console.log(quickSortWithoutDuplicates(arr2), iterations2) // [ 0, 1, 3, 4, 5, 6, 8, 10, 12, 15, 17, 33, 34, 51, 55, 67, 86, 89, 213, 535, 757], iterations: 117
 
 // complexity: O(n log n)
